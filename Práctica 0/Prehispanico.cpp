@@ -554,7 +554,7 @@ int main()
     else {
         ma_sound_set_spatialization_enabled(&backgroundMusic, MA_FALSE);
         ma_sound_set_looping(&backgroundMusic, MA_TRUE);
-        ma_sound_set_volume(&backgroundMusic, 0.5f); 
+        ma_sound_set_volume(&backgroundMusic, 0.3f); 
         ma_sound_start(&backgroundMusic);
         g_backgroundMusic = &backgroundMusic;
     }
@@ -569,7 +569,7 @@ int main()
     }
     else {
         ma_sound_set_spatialization_enabled(&puroHuesoSound, MA_FALSE);
-        ma_sound_set_volume(&puroHuesoSound, 5.0f);
+        ma_sound_set_volume(&puroHuesoSound, 0.5f);
         g_puroHuesoSound = &puroHuesoSound;
     }
 
@@ -591,7 +591,7 @@ int main()
         ma_sound_set_rolloff(&ringSound, 1.0f);  
         ma_sound_set_cone(&ringSound, 360.0f, 360.0f, 1.0f);
         ma_sound_set_doppler_factor(&ringSound, 0.0f);
-        ma_sound_set_volume(&ringSound, 1.5f); 
+        ma_sound_set_volume(&ringSound, 0.7f); 
         g_ringSound = &ringSound;
     }
 
@@ -1208,8 +1208,10 @@ int main()
         skyboxShader.setMat4("projection", projection);
 
         // Enviar uniforms del ciclo día/noche al skybox
+        float skyboxMixMin = 0.4f; 
+        float dayNightMixForShader = glm::max(sunIntensity, skyboxMixMin);
         skyboxShader.setVec3("dayNightTint", skyboxTint);
-        skyboxShader.setFloat("dayNightMix", sunIntensity);
+        skyboxShader.setFloat("dayNightMix", dayNightMixForShader);
 
         glBindVertexArray(skyboxVAO);
         glActiveTexture(GL_TEXTURE0);
