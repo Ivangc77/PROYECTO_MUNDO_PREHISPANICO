@@ -167,76 +167,37 @@ glm::vec3 pointLightPositions[] = {
 	glm::vec3(-20.0f, 3.0f, -60.0f)  
 };
 
+
 // Color blanco para las luces
 glm::vec3 pointLightColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
-//LUCES TIPO REFLECTOR (SPOTLIGHTS)
-// Base del marco de luces
-glm::vec3 marcoBasePosition = glm::vec3(0.0f, -0.5f, -0.5f);
-float marcoBaseRotation = 45.0f;
-float marcoBaseScale = 3.0f;
-
-// Offset local de cada reflector respecto al marco
-float reflectorLocalDistance = 1.53f; 
-float reflectorLocalHeight = 3.35f;  
-float reflectorModelScale = 0.9f;   
-
-//CONFIGURACIÓN DE SPOTLIGHTS
-float spotIntensityAmbient = 0.15f;  
-float spotIntensityDiffuse = 2.0f;   
-float spotIntensitySpecular = 1.5f;   
-
-// Ángulos del cono 
-float spotInnerAngle = 15.0f;         
-float spotOuterAngle = 22.0f;         
-
-// Función auxiliar para transformar un punto local a espacio mundial
-auto transformLocalToWorld = [&](glm::vec3 localPos) -> glm::vec3 {
-    // Aplicar escala del marco
-    glm::vec3 scaled = localPos * marcoBaseScale;
-    // Aplicar rotación del marco (45° Y)
-    float angleRad = glm::radians(marcoBaseRotation);
-    float cos_angle = cos(angleRad);
-    float sin_angle = sin(angleRad);
-    
-    glm::vec3 rotated;
-    rotated.x = scaled.x * cos_angle - scaled.z * sin_angle;
-    rotated.y = scaled.y;
-    rotated.z = scaled.x * sin_angle + scaled.z * cos_angle;
-    
-    // Aplicar translación del marco
-    return rotated + marcoBasePosition;
-};
-
-// Posiciones locales de los 4 reflectores
-glm::vec3 reflectorLocalPositions[] = {
-    glm::vec3(reflectorLocalDistance, reflectorLocalHeight, reflectorLocalDistance),   
-    glm::vec3(-reflectorLocalDistance, reflectorLocalHeight, reflectorLocalDistance),  
-    glm::vec3(-reflectorLocalDistance, reflectorLocalHeight, -reflectorLocalDistance),
-    glm::vec3(reflectorLocalDistance, reflectorLocalHeight, -reflectorLocalDistance)  
-};
-
-// Convertir a posiciones mundiales
+//LUCES TIPO REFLECTOR (SPOTLIGHTS) - Posiciones ya calculadas
 glm::vec3 spotLightPositions[] = {
-    transformLocalToWorld(reflectorLocalPositions[0]),
-    transformLocalToWorld(reflectorLocalPositions[1]),
-    transformLocalToWorld(reflectorLocalPositions[2]),
-    transformLocalToWorld(reflectorLocalPositions[3])
+    glm::vec3(2.828f, 9.55f, 2.328f),    // Esquina 1
+    glm::vec3(-2.828f, 9.55f, 2.328f),   // Esquina 2
+    glm::vec3(-2.828f, 9.55f, -3.328f),  // Esquina 3
+    glm::vec3(2.828f, 9.55f, -3.328f)    // Esquina 4
 };
 
-// Centro del ring
-glm::vec3 ringCenter = glm::vec3(0.0f, 0.7f, -0.5f);
-
-// Direcciones de los spotlights 
+// Direcciones de los spotlights hacia el centro del ring
 glm::vec3 spotLightDirections[] = {
-    glm::normalize(ringCenter - spotLightPositions[0]), 
-    glm::normalize(ringCenter - spotLightPositions[1]),  
-    glm::normalize(ringCenter - spotLightPositions[2]), 
-    glm::normalize(ringCenter - spotLightPositions[3])   
+    glm::vec3(-0.289f, -0.928f, -0.237f),
+    glm::vec3(0.289f, -0.928f, -0.237f),
+    glm::vec3(0.289f, -0.928f, 0.287f),
+    glm::vec3(-0.289f, -0.928f, 0.287f)
 };
 
 // Color de los reflectores
-glm::vec3 spotLightColor = glm::vec3(1.0f, 1.0f, 1.0f);  
+glm::vec3 spotLightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+
+//CONFIGURACIÓN DE SPOTLIGHTS
+float spotIntensityAmbient = 0.15f;
+float spotIntensityDiffuse = 2.0f;
+float spotIntensitySpecular = 1.5f;
+
+// Ángulos del cono 
+float spotInnerAngle = 15.0f;
+float spotOuterAngle = 22.0f;
 
 void UpdateDayNightCycle()
 {
