@@ -28,7 +28,7 @@
 #include "stb_image.h"
 
 // Properties
-const GLuint WIDTH = 1080, HEIGHT = 720;
+const GLuint WIDTH = 1280, HEIGHT = 720;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 
 // Function prototypes
